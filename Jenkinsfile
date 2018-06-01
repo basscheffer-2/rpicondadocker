@@ -11,9 +11,9 @@ pipeline {
       steps{
         sh '''
           docker build -t lulusys/rpiconda:opencv -f Dockerfile.opencv .
-          activenv=$(docker run --rm lulusys/rpiconda:opencv /bin/bash -c "echo $CONDA_DEFAULT_ENV")
+          activenv=$(docker run --rm lulusys/rpiconda:opencv /bin/bash -c "echo \$CONDA_DEFAULT_ENV")
           echo $activenv
-          if [ $activenv != 'opencv' ]; then
+          if [ $activenv != "opencv" ]; then
             exit 1
           fi
         '''
