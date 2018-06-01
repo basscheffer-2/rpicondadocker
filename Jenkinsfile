@@ -11,9 +11,9 @@ pipeline {
       steps{
         sh '''
           docker build -t lulusys/rpiconda:opencv -f Dockerfile.opencv .
-          activenv=$(docker run --rm lulusys/rpiconda:opencv /bin/bash -c "echo \$CONDA_DEFAULT_ENV")
-          echo $activenv
-          if [ $activenv != "opencv" ]; then
+          wpyt=$(docker run --rm lulusys/rpiconda:opencv /bin/bash -c "which python")
+          echo $wpyt
+          if [ "$wpyt" != "/opt/miniconda3/envs/opencv/bin/python" ]; then
             exit 1
           fi
         '''
