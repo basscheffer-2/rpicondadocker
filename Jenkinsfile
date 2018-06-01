@@ -9,8 +9,13 @@ pipeline {
     }
     stage('Build opencv') {
       steps{
-        sh 'docker build -t lulusys/rpiconda:opencv -f Dockerfile.opencv .'
-        sh 'docker run --rm lulusys/rpiconda:opencv conda info'
+        sh '''
+          docker build -t lulusys/rpiconda:opencv -f Dockerfile.opencv .
+          activenv=$(docker run --rm lulusys/rpiconda:opencv /bin/bash -c 'echo $CONDA_DEFAULT_ENV')
+          if [ "$activenv" != 'opencv' ]; then
+            exit 1
+          fi
+        '''
       }
     }
     stage('Push') {
