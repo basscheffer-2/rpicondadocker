@@ -12,8 +12,7 @@ pipeline {
         sh '''
           docker build -t lulusys/rpiconda:opencv -f Dockerfile.opencv .
           wpyt=$(docker run --rm lulusys/rpiconda:opencv /bin/bash -c "which python")
-          echo $wpyt
-          if [ "$wpyt" != "/opt/miniconda3/envs/opencv/bin/python" ]; then
+          if [ "$wpyt" != "/opt/miniconda3/envvs/opencv/bin/python" ]; then
             exit 1
           fi
         '''
