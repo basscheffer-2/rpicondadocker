@@ -1,0 +1,9 @@
+FROM lulusys/rpiconda:latest
+
+# conda env
+RUN conda create -n opencv python=3.6
+RUN conda install -n opencv opencv
+# activate
+ENV PATH /opt/miniconda3/envs/myenv/bin:$PATH
+
+CMD /bin/bash
