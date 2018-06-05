@@ -1,0 +1,15 @@
+FROM lulusys/rpiconda:opencv
+
+RUN apt-get update
+RUN apt-get install build-essential
+RUN apt-get install cmake
+
+# conda env
+RUN conda create -n dlib --clone opencv
+RUN conda remove -n opencv --all
+# activate
+ENV PATH /opt/miniconda3/envs/dlib/bin:$PATH
+# install dlib
+RUN pip install dlib
+
+CMD /bin/bash

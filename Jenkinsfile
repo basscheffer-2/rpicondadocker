@@ -18,11 +18,23 @@ pipeline {
         '''
       }
     }
+    stage('Build dlib') {
+      steps{
+        sh '''
+          docker build --pull --rm -t lulusys/rpiconda:dlib -f Dockerfile.dlib .
+          wpyt=$(docker run --rm lulusys/rpiconda:dlib /bin/bash -c "which python")
+          if [ "$wpyt" != "/opt/miniconda3/envs/dlib/bin/python" ]; then
+            exit 1
+          fi
+        '''
+      }
+    }
     stage('Push') {
       steps{
         withDockerRegistry([url: '', credentialsId: 'dockerhub']) {
           sh 'docker push lulusys/rpiconda:latest'
           sh 'docker push lulusys/rpiconda:opencv'
+          sh 'docker push lulusys/rpiconda:dlib'
         }
       }
     }
